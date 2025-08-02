@@ -1,0 +1,1 @@
+import{r as a,B as l}from"./index-Ck4f6oB1.js";const s=a(!1),e=l({});function c(){return{isOpen:s,dialogProps:e,openDialog:o=>{Object.assign(e,o),s.value=!0},closeDialog:()=>{s.value=!1,Object.keys(e).forEach(o=>delete e[o])}}}export{c as u};
