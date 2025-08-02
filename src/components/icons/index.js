@@ -1,0 +1,13 @@
+export { default as AppleIcon } from "./Apple.vue";
+export { default as BbqIcon } from "./Bbq.vue";
+export { default as CarrotIcon } from "./Carrot.vue";
+export { default as ChickenIcon } from "./Chicken.vue";
+export { default as ClipboardIcon } from "./Clipboard.vue";
+export { default as CornIcon } from "./Corn.vue";
+export { default as EggIcon } from "./Egg.vue";
+export { default as FireIcon } from "./Fire.vue";
+export { default as HomeIcon } from "./Home.vue";
+export { default as ProductIcon } from "./Product.vue";
+export { default as ProfileIcon } from "./Profile.vue";
+export { default as SearchIcon } from "./Search.vue";
+export { default as WhatsappIcon } from "./Whatsapp.vue";
