@@ -1,16 +1,20 @@
 <script setup>
 import { ref } from "vue";
 import { useDialogLogin } from '@/composables/useDialogLogin';
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth";
 
 import LogoImg from "@/assets/images/logo.png";
 import { Heart } from 'lucide-vue-next';
 import { Button } from '@/components/ui/button';
 import DropdownMenu from "./DropdownMenu.vue";
+import DropdownProfil from "./DropdownProfil.vue";
 import { InputGroup } from "@/components/ui/input-group";
 
 const dialogLogin = useDialogLogin();
+const authStore = useAuthStore();
 const route = useRoute();
+const router = useRouter();
 const search = ref('');
 </script>
 
@@ -24,24 +28,26 @@ const search = ref('');
         </div>
         <div class="w-full flex items-center justify-center gap-x-2">
           <DropdownMenu v-if="route.name == 'home'" />
-          <router-link v-if="route.name != 'home'" to="home"
-            class="mr-5 text-muted-foreground font-medium hover:text-foreground">Home</router-link>
+          <a href="#" v-if="route.name != 'home'" @click.prevent="router.push({ name: 'home' })"
+            class="mr-5 text-muted-foreground font-medium hover:text-foreground">Home</a>
           <div class="w-full flex-1">
             <InputGroup v-model="search" type="text" placeholder="Cari produk" />
           </div>
         </div>
       </div>
       <div class="flex items-center justify-end gap-x-6">
-        <button class="cursor-pointer text-muted-foreground">
+        <!-- <button class="cursor-pointer text-muted-foreground">
           <Heart class="size-6" />
-        </button>
+        </button> -->
 
-        <Button @click.prevent="dialogLogin.openDialog({
+        <Button v-if="!authStore.isAuthenticated" @click.prevent="dialogLogin.openDialog({
           page: 'login'
         })" variant="outline"
           class="cursor-pointer text-muted-foreground hover:text-foreground text-[14px] rounded-[4px]">
           Daftar / Masuk
         </Button>
+
+        <DropdownProfil />
       </div>
     </div>
   </header>

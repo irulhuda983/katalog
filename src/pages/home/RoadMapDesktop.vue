@@ -42,7 +42,7 @@ const steps = [
   },
   {
     title: "Pembayaran",
-    description: "Setelah terpilih kami akan melakukan pembayaran ke anda dan anda dapat mengirim barang ke kami",
+    description: "Pembayaran akan dilakukan setelah barang sampai dan kami terima.",
   },
 ];
 </script>

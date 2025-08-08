@@ -15,9 +15,12 @@ import {
 const kategoriStore = useKategoriStore();
 const router = useRouter();
 
-const navigateToProduct = () => {
+const navigateToProduct = (ktg) => {
   router.push({
-    name: 'product'
+    name: 'product',
+    query: {
+      kategori: ktg.slug
+    }
   });
 };
 </script>
@@ -31,7 +34,7 @@ const navigateToProduct = () => {
             <li v-for="(item, i) in kategoriStore.list" :key="i" class="row-span-3">
               <NavigationMenuLink as-child>
                 <a class="flex flex-row items-center gap-x-3 select-none rounded-md no-underline outline-none focus:shadow-md"
-                  href="/" @click.prevent="navigateToProduct">
+                  href="/" @click.prevent="navigateToProduct(item)">
                   <component :is="item.icon" class="size-5" />
                   <div>{{ item.nama }}</div>
                 </a>

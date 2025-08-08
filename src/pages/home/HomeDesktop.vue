@@ -1,10 +1,8 @@
 <script setup>
 import { nextTick, ref, watch } from 'vue';
-import { cn } from '@/lib/utils';
-import { useCarousel } from '@/components/ui/carousel';
-import { watchOnce } from '@vueuse/core';
+import { storeToRefs } from 'pinia';
+import { useProdukStore } from '@/stores/produk';
 
-import BannerImg from "@/assets/images/banner1.png";
 import {
   Carousel,
   CarouselContent,
@@ -16,6 +14,17 @@ import { CardProduct } from '@/components/ui/card-product';
 import { ChevronRight } from 'lucide-vue-next';
 import DesktopBanner from './DesktopBanner.vue';
 import RoadMapDesktop from './RoadMapDesktop.vue';
+import EmptyProdukImg from "@/assets/images/empty-produk.png";
+
+const produkStore = useProdukStore();
+const { loadingState } = storeToRefs(produkStore);
+
+const emits = defineEmits(['navigate']);
+
+const handleNavigate = ({ type }) => {
+  console.log('asfjaslf');
+  emits('navigate', { type });
+}
 
 </script>
 <template>
@@ -29,23 +38,39 @@ import RoadMapDesktop from './RoadMapDesktop.vue';
         <div class="font-bold text-[18px]">
           Dibutuhkan Segera
         </div>
-        <a href="#"
+        <a href="#" @click.prevent="handleNavigate({ type: 'urgent' })"
           class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[14px]">
           <span>Lihat Semua</span>
           <ChevronRight class="size-5" />
         </a>
       </div>
-      <Carousel class="w-full box-border" :opts="{
-        align: 'start',
-      }">
-        <CarouselContent class="w-full box-border -ml-1 py-5">
-          <CarouselItem v-for="(_, index) in 10" :key="index" class="pl-1 basis-1/4 mr-3">
-            <CardProduct />
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious class="ml-8" />
-        <CarouselNext class="mr-8" />
-      </Carousel>
+      <div v-if="loadingState" class="w-full box-border -ml-1 py-5 grid grid-cols-4">
+        <div v-for="(_, index) in 4" :key="index" class="pl-1 basis-1/4 mr-3">
+          <CardProduct :produk="{}" :loading="loadingState" />
+        </div>
+      </div>
+
+      <div v-else class="w-full">
+        <div v-if="produkStore.produkSegeraState.length <= 0"
+          class="w-full flex flex-col items-center justify-center bg-card rounded-[8px] py-12">
+          <img :src="EmptyProdukImg" alt="" class="h-32 mb-5">
+          <div class="text-xl font-semibold text-muted-foreground">Penawaran Belum Tersedia</div>
+          <p class="text-muted-foreground">Belum ada produk yang segera dibutuhkan.</p>
+        </div>
+
+        <Carousel class="w-full box-border" :opts="{
+          align: 'start',
+        }">
+          <CarouselContent class="w-full box-border -ml-1 py-5">
+            <CarouselItem v-for="(item, index) in produkStore.produkSegeraState" :key="index"
+              class="pl-1 basis-1/4 mr-3">
+              <CardProduct :produk="item" :loading="loadingState" />
+            </CarouselItem>
+          </CarouselContent>
+          <CarouselPrevious class="ml-8" />
+          <CarouselNext class="mr-8" />
+        </Carousel>
+      </div>
     </div>
     <!-- end dibutuhkan segera -->
 
@@ -55,15 +80,29 @@ import RoadMapDesktop from './RoadMapDesktop.vue';
         <div class="font-bold text-[18px]">
           Open Bid Produk
         </div>
-        <a href="#"
+        <a href="#" @click.prevent="handleNavigate({ type: 'openBid' })"
           class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[14px]">
           <span>Lihat Semua</span>
           <ChevronRight class="size-5" />
         </a>
       </div>
-      <div class="w-full grid grid-cols-4 gap-5">
-        <div v-for="i in 8" :key="i" class="basis-1/4">
-          <CardProduct />
+
+      <div v-if="loadingState" class="w-full grid grid-cols-4 gap-5">
+        <div v-for="(_, i) in 4" :key="i" class="basis-1/4">
+          <CardProduct :produk="{}" :loading="loadingState" />
+        </div>
+      </div>
+
+      <div v-else class="w-full box-border">
+        <div v-if="produkStore.produkOpenedState.length > 0" class="w-full grid grid-cols-4 gap-5">
+          <div v-for="(item, i) in produkStore.produkOpenedState" :key="i" class="basis-1/4">
+            <CardProduct :produk="item" :loading="loadingState" />
+          </div>
+        </div>
+        <div v-else class="w-full flex flex-col items-center justify-center bg-card rounded-[8px] py-12">
+          <img :src="EmptyProdukImg" alt="" class="h-32 mb-5">
+          <div class="text-xl font-semibold text-muted-foreground">Penawaran Belum Tersedia</div>
+          <p class="text-muted-foreground">Belum ada produk yang open penawaran.</p>
         </div>
       </div>
     </div>

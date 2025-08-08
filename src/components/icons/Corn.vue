@@ -1,5 +1,5 @@
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="1005" viewBox="0 0 1024 1024" class="icon" version="1.1">
+  <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 1024 1024" class="icon" version="1.1">
     <path
       d="M480.8 563.8c61.4-33.2 133.6-41.4 201.4-22.3C747 446.2 792.1 336.6 813 223.7c3.3-17.7-3.4-35.8-17.3-47.2-14-11.4-33-14.2-49.7-7.4C639.7 212.6 541.7 279.2 461.5 362c32.6 62.6 39.3 135 19.3 201.8z"
       fill="#FCD04E" />
