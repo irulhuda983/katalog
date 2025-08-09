@@ -44,7 +44,7 @@ const handleNavigate = ({ type }) => {
       <div class="font-bold text-[14px]">
         Dibutuhkan Segera
       </div>
-      <a href="#" @click.prevent="handleNavigate({ type: 'urgent' })"
+      <a href="#" @click.prevent="handleNavigate({ type: 'segera' })"
         class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[12px]">
         <span>Lihat Semua</span>
       </a>

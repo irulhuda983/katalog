@@ -38,7 +38,7 @@ const handleNavigate = ({ type }) => {
         <div class="font-bold text-[18px]">
           Dibutuhkan Segera
         </div>
-        <a href="#" @click.prevent="handleNavigate({ type: 'urgent' })"
+        <a href="#" @click.prevent="handleNavigate({ type: 'segera' })"
           class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[14px]">
           <span>Lihat Semua</span>
           <ChevronRight class="size-5" />
@@ -80,7 +80,7 @@ const handleNavigate = ({ type }) => {
         <div class="font-bold text-[18px]">
           Open Bid Produk
         </div>
-        <a href="#" @click.prevent="handleNavigate({ type: 'openBid' })"
+        <a href="#" @click.prevent="handleNavigate({ type: 'open' })"
           class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[14px]">
           <span>Lihat Semua</span>
           <ChevronRight class="size-5" />

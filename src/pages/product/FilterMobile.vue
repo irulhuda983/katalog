@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, watch, inject, onMounted } from 'vue';
 import {
   Sheet,
   SheetClose,
@@ -13,24 +13,49 @@ import {
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
+import { useKategoriStore } from '@/stores/kategori';
+const kategoriStore = useKategoriStore();
+const produkStore = inject('produkStore');
+
 const props = defineProps({
   open: {
     type: Boolean,
     required: false,
     default: false
+  },
+  params: {
+    type: null, required: false, default: {
+      status: 'all',
+      kategori: "all",
+      range: 'all'
+    }
   }
 });
 
 const emits = defineEmits(['onClose']);
 
-const params = reactive({
-  is_active: null,
-  status: null,
-});
-
 const handleFilter = () => {
+  produkStore.fetchListProduk();
   emits('onClose');
 };
+
+watch(() => props.params.kategori, (newVal) => {
+  produkStore.setParams({
+    kategori: newVal
+  });
+});
+
+watch(() => props.params.status, (newVal) => {
+  produkStore.setParams({
+    status: newVal
+  });
+});
+
+watch(() => props.params.range, (newVal) => {
+  produkStore.setParams({
+    range: newVal
+  });
+});
 </script>
 
 <template>
@@ -48,41 +73,40 @@ const handleFilter = () => {
 
         <div class="w-full box-border mb-[20px]">
           <div class="w-full box-border mb-[22px]">
-            <Label class="font-medium mb-[10px] text-[#1D1D1D]">Ketersediaan Tanah</Label>
-            <RadioGroup :default-value="params.status" :orientation="'vertical'" v-model="params.status">
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="ketersediaan1" :value="null" />
-                <Label for="ketersediaan1">Semua</Label>
+            <Label class="font-medium mb-[10px] text-[#1D1D1D]">Kategori</Label>
+            <RadioGroup :default-value="params.kategori" :orientation="'vertical'" v-model="params.kategori">
+              <div v-for="(item, i) in kategoriStore.list" :key="i" class="flex items-center space-x-2">
+                <RadioGroupItem id="{{ item.slug }}" :value="item.slug" />
+                <Label for="{{ item.slug }}">{{ item.nama }}</Label>
               </div>
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="ketersediaan2" value="tersedia" />
-                <Label for="ketersediaan2">Tersedia</Label>
-              </div>
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="ketersediaan3" value="terjual" />
-                <Label for="ketersediaan3">Terjual</Label>
-              </div>
+
             </RadioGroup>
           </div>
 
           <div class="w-full box-border mb-[20px]">
-            <Label class="font-medium mb-[10px] text-[#1D1D1D]">Status Tanah</Label>
-            <RadioGroup :default-value="params.is_active" v-model="params.is_active" :orientation="'vertical'">
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="statusTanah1" :value="null" />
-                <Label for="statusTanah1">Semua</Label>
+            <Label class="font-medium mb-[10px] text-[#1D1D1D]">Status</Label>
+            <RadioGroup :default-value="params.status" v-model="params.status" :orientation="'vertical'">
+              <div v-for="(item, i) in kategoriStore.listStatus" :key="i" class="flex items-center space-x-2">
+                <RadioGroupItem id="{{ item.slug }}" :value="item.slug" />
+                <Label for="{{ item.slug }}">{{ item.nama }}</Label>
               </div>
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="statusTanah2" value="1" />
-                <Label for="statusTanah2">Aktif</Label>
+
+            </RadioGroup>
+          </div>
+
+          <div class="w-full box-border mb-[20px]">
+            <Label class="font-medium mb-[10px] text-[#1D1D1D]">Terakhir di publish</Label>
+            <RadioGroup :default-value="params.range" v-model="params.range" :orientation="'vertical'">
+              <div v-for="(item, i) in kategoriStore.listRange" :key="i" class="flex items-center space-x-2">
+                <RadioGroupItem id="{{ item.slug }}" :value="item.slug" />
+                <Label for="{{ item.slug }}">{{ item.nama }}</Label>
               </div>
-              <div class="flex items-center space-x-2">
-                <RadioGroupItem id="statusTanah3" value="0" />
-                <Label for="statusTanah3">Nonaktif</Label>
-              </div>
+
             </RadioGroup>
           </div>
         </div>
+
+
 
         <div class="w-full flex items-center justify-between mb-2">
           <button @click.prevent="handleFilter()"

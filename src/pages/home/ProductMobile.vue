@@ -37,7 +37,7 @@ const handleNavigate = ({ type }) => {
         Open Penawaran Produk
       </div>
 
-      <a href="#" @click.prevent="handleNavigate({ type: 'openBid' })"
+      <a href="#" @click.prevent="handleNavigate({ type: 'open' })"
         class="cursor-pointer flex items-center gap-x-2 text-blue-500 hover:text-blue-400 font-bold text-[12px]">
         <span>Lihat Semua</span>
       </a>

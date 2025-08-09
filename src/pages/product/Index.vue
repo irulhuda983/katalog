@@ -19,12 +19,14 @@ provide('produkStore', produkStore);
 const { isMobile } = useResponsive();
 
 onMounted(async () => {
-  const kategori = route.query?.kategori;
-  const type = route.query?.type;
+  const kategori = route.query?.kategori || 'all';
+  const status = route.query?.status || 'all';
+  const type = route.query?.type || 'all';
 
   produkStore.setParams({
     kategori,
-    type,
+    status: type,
+    range: 'all',
     search: null,
     page: 1,
     limit: 10

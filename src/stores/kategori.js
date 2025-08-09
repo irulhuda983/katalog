@@ -36,7 +36,43 @@ export const useKategoriStore = defineStore("kategori", () => {
     }
   ]);
 
+  const listStatus = ref([
+    {
+      nama: 'Semua',
+      slug: "all",
+    },
+    {
+      nama: 'Segera',
+      slug: "segera",
+    },
+    {
+      nama: 'Open Bid',
+      slug: "open",
+    },
+  ]);
+
+  const listRange = ref([
+    {
+      nama: 'Semua',
+      slug: "all",
+    },
+    {
+      nama: '7 hari',
+      slug: "7days",
+    },
+    {
+      nama: '14 hari',
+      slug: "14days",
+    },
+    {
+      nama: '30 hari',
+      slug: "30days",
+    },
+  ]);
+
   return {
-    list
+    list,
+    listStatus,
+    listRange
   };
 });
