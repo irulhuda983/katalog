@@ -1,0 +1,1 @@
+import{r as o,x as t,a7 as r}from"./index-C9U_2RCw.js";function d(e=768){const n=o(window.innerWidth<=e),i=()=>{n.value=window.innerWidth<=e};return t(()=>window.addEventListener("resize",i)),r(()=>window.removeEventListener("resize",i)),{isMobile:n}}export{d as u};
