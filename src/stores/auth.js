@@ -65,7 +65,7 @@ export const useAuthStore = defineStore("auth", () => {
 
       setToken(null);
       setUser(null);
-      location.reload();
+      // location.reload();
     } catch (error) {
       throw error;
     }
